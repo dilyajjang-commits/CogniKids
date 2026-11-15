@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>CogniKids — Образовательная платформа</title>
+<style>
+:root {
+  --bg: #F9F5F0;
+  --paper: #FFFFFF;
+  --paper-soft: #F4EFEB;
+  --ink: #3D3835;
+  --muted: #7E746F;
+  --border: #E8E0D7;
+  
+  --primary: #E89BB0;
+  --primary-hover: #DF88A0;
+  --primary-text: #4A222C;
+  
+  --secondary: #93C48B;
+  --secondary-hover: #7FB676;
+  --secondary-text: #213C1C;
+  
+  --blue: #8CB9DA;
+  --blue-hover: #75A8CC;
+  --blue-text: #1C364A;
+  
+  --accent: #FFC067;
+  --accent-text: #4F3300;
+
+  --shadow: 0 10px 30px rgba(82, 63, 49, 0.07);
+  --shadow-sm: 0 4px 14px rgba(82, 63, 49, 0.05);
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --font-base: 18px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--font-base);
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body.large-text {
+  --font-base: 22px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #D9D0C7;
+  border-radius: 4px;
+}
+
+.app {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header & Navbar */
+.top-nav {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #F9D6DC 0%, #D4E6F5 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--primary-text);
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.8);
+}
+
+.brand-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.1;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+}
+
+.brand-subtitle {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.controls-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* UI Elements */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  text-align: center;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:focus-visible, select:focus-visible, input:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.btn-soft {
+  background: var(--paper-soft);
+  color: var(--ink);
+  border-color: var(--border);
+}
+
+.btn-soft:hover {
+  background: #ECE5DE;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--primary-text);
+}
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: var(--secondary-text);
+}
+.btn-secondary:hover {
+  background: var(--secondary-hover);
+}
+
+.btn-blue {
+  background: var(--blue);
+  color: var(--blue-text);
+}
+.btn-blue:hover {
+  background: var(--blue-hover);
+}
+
+.select-custom {
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background-color: var(--paper-soft);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* Layout */
+.main-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.sidebar {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.content-area {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  min-height: 580px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-heading {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+  margin: 0 0 12px 0;
+}
+
+.grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.grid-1col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.nav-btn {
+  width: 100%;
+  min-height: 46px;
+  background: var(--paper-soft);
+  border: 2px solid transparent;
+  color: var(--ink);
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.nav-btn.active {
+  background: #FCE8EC;
+  border-color: var(--primary);
+  color: var(--primary-text);
+}
+
+.subject-btn {
+  justify-content: flex-start;
+  padding: 10px 14px;
+}
+
+.subject-btn.active {
+  background: #E3F0F9;
+  border-color: var(--blue);
+  color: var(--blue-text);
+}
+
+.side-info-card {
+  margin-top: 24px;
+  background: var(--paper-soft);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+  border-left: 4px solid var(--blue);
+}
+
+/* Banner / Hero */
+.hero-banner {
+  background: linear-gradient(135deg, #FAF0F2 0%, #EFF6EE 50%, #EEF5FA 100%);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(0,0,0,0.03);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-tag {
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.hero-title {
+  font-size: clamp(22px, 3vw, 30px);
+  margin: 0 0 8px 0;
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.hero-desc {
+  margin: 0;
+  color: var(--muted);
+  font-size: 15px;
+  max-width: 650px;
+}
+
+/* Section Controls */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.level-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.level-card {
+  background: var(--paper-soft);
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.level-card.active {
+  background: #FFFFFF;
+  border-color: var(--secondary);
+  box-shadow: 0 4px 12px rgba(147, 196, 139, 0.25);
+}
+
+.level-title {
+  font-weight: 800;
+  font-size: 16px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.level-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+/* Exercise Box */
+.exercise-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  background: #FFFFFF;
+  box-shadow: var(--shadow-sm);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.progress-bar-container {
+  height: 10px;
+  background: var(--paper-soft);
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 8px 0 20px 0;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--secondary);
+  transition: width 0.3s ease;
+  border-radius: 20px;
+}
+
+.math-display {
+  font-size: clamp(32px, 6vw, 48px);
+  font-weight: 900;
+  text-align: center;
+  margin: 24px 0;
+  letter-spacing: 1px;
+  color: var(--ink);
+}
+
+.answer-input-group {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.math-input {
+  width: 140px;
+  min-height: 52px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ink);
+  background: var(--paper-soft);
+  transition: border-color 0.2s;
+}
+
+.math-input:focus {
+  border-color: var(--blue);
+  background: #FFF;
+}
+
+.reading-text-box {
+  background: #F8F5FB;
+  border-radius: var(--radius-md);
+  padding: 20px;
+  font-size: 20px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  border: 1px solid #ECE3F2;
+}
+
+.options-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.option-btn {
+  background: var(--paper-soft);
+  border: 2px solid transparent;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.option-btn:hover {
+  background: #ECE5DE;
+}
+
+.option-btn.selected {
+  border-color: var(--blue);
+  background: #E3F0F9;
+  color: var(--blue-text);
+}
+
+/* Feedback & Messages */
+.feedback-box {
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-top: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.feedback-box.success {
+  display: block;
+  background: #EAF5E8;
+  color: #2D5727;
+  border: 1px solid #C5E4C0;
+}
+
+.feedback-box.warning {
+  display: block;
+  background: #FDF3E7;
+  color: #7A4B13;
+  border: 1px solid #F8DBB8;
+}
+
+.feedback-box.error {
+  display: block;
+  background: #FCEBEB;
+  color: #7A2828;
+  border: 1px solid #F7C8C8;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* Bottom Stats Dashboard */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.stat-card {
+  background: var(--paper-soft);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.stat-value {
+  font-size: 26px;
+  font-weight: 900;
+  display: block;
+  color: var(--ink);
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #332D29;
+  color: #FFF;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.footer {
+  text-align: center;
+  padding: 24px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 860px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    order: -1;
+  }
+  .level-cards {
+    grid-template-columns: 1fr;
+  }
+  .content-area {
+    padding: 18px;
+    min-height: auto;
+  }
+  .top-nav {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .controls-group {
+    justify-content: space-between;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- Header / Navigation -->
+  <header class="top-nav">
+    <a href="#" class="brand" aria-label="CogniKids Главная">
+      <div class="logo-icon">C</div>
+      <div>
+        <h1 class="brand-title">CogniKids</h1>
+        <div class="brand-subtitle" id="subTitleText">Учимся легко и с удовольствием</div>
+      </div>
+    </a>
+
+    <div class="controls-group">
+      <button class="btn btn-soft" id="fontSizeToggle" title="Изменить размер текста">A+ Размер</button>
+      
+      <select class="select-custom" id="langSelect" aria-label="Выбор языка">
+        <option value="ru">Русский</option>
+        <option value="kk">Қазақша</option>
+      </select>
+
+      <select class="select-custom" id="speechSpeed" aria-label="Скорость озвучки" title="Скорость речи">
+        <option value="0.7">0.7x</option>
+        <option value="0.9">0.9x</option>
+        <option value="1.0" selected>1.0x</option>
+        <option value="1.2">1.2x</option>
+      </select>
+
+      <button class="btn btn-soft" id="speakBtn" title="Озвучить текст задания">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+        <span id="speakBtnText">Озвучить</span>
+      </button>
+
+      <button class="btn btn-primary" id="shareBtn" title="Поделиться этой платформой">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+        <span id="shareBtnText">Поделиться</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Grid Layout -->
+  <div class="main-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-heading" id="lblGradeSelect">Выберите класс</div>
+      <div class="grid-2col" id="gradeButtons">
+        <button class="nav-btn active" data-grade="1">1 класс</button>
+        <button class="nav-btn" data-grade="2">2 класс</button>
+        <button class="nav-btn" data-grade="3">3 класс</button>
+        <button class="nav-btn" data-grade="4">4 класс</button>
+      </div>
+
+      <div class="sidebar-heading" style="margin-top: 24px;" id="lblSubjectSelect">Предметы</div>
+      <div class="grid-1col">
+        <button class="nav-btn subject-btn active" data-subject="math">
+          <span style="font-size: 20px;">🔢</span>
+          <span id="lblMath">Математика</span>
+        </button>
+        <button class="nav-btn subject-btn" data-subject="reading">
+          <span style="font-size: 20px;">📖</span>
+          <span id="lblReading">Чтение</span>
+        </button>
+      </div>
+
+      <div class="side-info-card" id="sideInfoNote">
+        Занимайтесь в комфортном темпе. Ошибаться — это часть обучения! Вы всегда можете воспользоваться подсказкой.
+      </div>
+    </aside>
+
+    <!-- Main Content Dynamic View -->
+    <main class="content-area">
+      
+      <!-- Welcome Hero Card -->
+      <div class="hero-banner">
+        <div class="hero-tag">COGNIKIDS · <span id="heroGradeBadge">1 класс</span></div>
+        <h2 class="hero-title" id="heroTitle">Привет! Давай учиться вместе 🌟</h2>
+        <p class="hero-desc" id="heroDesc">Выбирай интересные упражнения, пробуй решать задачи и получай звёзды успеха.</p>
+      </div>
+
+      <!-- MATH VIEW -->
+      <div id="mathView">
+        <div class="section-header">
+          <h3 class="section-title" id="lblLevelHeading">Уровень сложности</h3>
+          <span class="stat-label" id="lblMathCount">Доступно множество заданий</span>
+        </div>
+
+        <div class="level-cards">
+          <div class="level-card active" data-level="0">
+            <span class="level-title" id="lvlEasyTitle">🌱 Начальный</span>
+            <span class="level-desc" id="lvlEasyDesc">Базовые примеры и простые числа</span>
+          </div>
+          <div class="level-card" data-level="1">
+            <span class="level-title" id="lvlMidTitle">🌿 Средний</span>
+            <span class="level-desc" id="lvlMidDesc">Уравнения и несколько действий</span>
+          </div>
+          <div class="level-card" data-level="2">
+            <span class="level-title" id="lvlHardTitle">🌳 Продвинутый</span>
+            <span class="level-desc" id="lvlHardDesc">Задачи повышенной сложности</span>
+          </div>
+        </div>
+
+        <div class="exercise-panel">
+          <div class="section-header">
+            <strong id="lblSession">Твоё занятие</strong>
+            <span class="stat-label" id="mathProgressCounter">Задание 1 из 4</span>
+          </div>
+
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="mathProgressBar"></div>
+          </div>
+
+          <div class="stat-label" style="text-align: center;" id="mathTopicLabel">Математика · 1 класс</div>
+          
+          <div class="math-display" id="mathQuestion">2 + 3 = ?</div>
+
+          <div class="answer-input-group">
+            <input type="number" inputmode="numeric" class="math-input" id="mathAnswer" placeholder="?" aria-label="Ваш ответ">
+            <button class="btn btn-primary" id="mathCheckBtn">Проверить</button>
+          </div>
+
+          <div class="feedback-box" id="mathFeedback" role="alert"></div>
+
+          <div class="action-buttons">
+            <button class="btn btn-soft" id="mathHintBtn">💡 Подсказка</button>
+            <button class="btn btn-secondary hidden" id="mathNextBtn">Следующее задание →</button>
+            <button class="btn btn-soft" id="mathRestartBtn">↻ С начала</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- READING VIEW -->
+      <div id="readingView" class="hidden">
+        <div class="section-header">
+          <h3 class="section-title" id="lblReadingTitle">Читаем и понимаем</h3>
+          <span class="stat-label" id="lblReadingSub">Внимательно прочитайте текст</span>
+        </div>
+
+        <div class="exercise-panel">
+          <div class="stat-label" id="lblReadingTopic">Короткий рассказ</div>
+          <div class="reading-text-box" id="readingPassage">Загрузка текста...</div>
+          
+          <h3 class="section-title" style="font-size: 18px; margin-bottom: 12px;" id="readingQuestion">Вопрос по тексту...</h3>
+          
+          <div class="options-grid" id="readingOptions"></div>
+
+          <div class="feedback-box" id="readingFeedback" role="alert"></div>
+
+          <div class="action-buttons">
+            <button class="btn btn-blue" id="readingCheckBtn">Проверить ответ</button>
+            <button class="btn btn-secondary hidden" id="readingNextBtn">Следующий текст →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Footer Bar -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <span class="stat-value" id="statCompleted">0</span>
+          <span class="stat-label" id="lblCompleted">Решено задач</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" id="statCorrect">0</span>
+          <span class="stat-label" id="lblCorrect">Правильно</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-value" style="color: #D98200;" id="statStars">⭐ 0</span>
+          <span class="stat-label" id="lblStars">Звёзд собрано</span>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <footer class="footer">
+    CogniKids &copy; 2026 — Бережное и доступное обучение для каждого ребёнка 💛
+  </footer>
+</div>
+
+<!-- Toast Popup Notification -->
+<div class="toast" id="toastMsg">Ссылка скопирована!</div>
+
+<script>
+// State Management
+let currentGrade = 1;
+let currentLevel = 0;
+let currentSubject = 'math';
+let mathIndex = 0;
+let readingIndex = 0;
+let completedCount = 0;
+let correctCount = 0;
+let starsCount = 0;
+let isLargeFont = false;
+let mathList = [];
+
+// Localization Dictionary
+const i18n = {
+  ru: {
+    subTitle: 'Учимся легко и с удовольствием',
+    gradeSelect: 'Выберите класс',
+    subjectSelect: 'Предметы',
+    math: 'Математика',
+    reading: 'Чтение',
+    sideNote: 'Занимайтесь в комфортном темпе. Ошибаться — это часть обучения! Вы всегда можете воспользоваться подсказкой.',
+    heroTitle: 'Привет! Давай учиться вместе 🌟',
+    heroDesc: 'Выбирай интересные упражнения, пробуй решать задачи и получай звёзды успеха.',
+    levelHeading: 'Уровень сложности',
+    mathCount: 'Доступно множество заданий',
+    easyTitle: '🌱 Начальный',
+    easyDesc: 'Базовые примеры и простые числа',
+    midTitle: '🌿 Средний',
+    midDesc: 'Уравнения и несколько действий',
+    hardTitle: '🌳 Продвинутый',
+    hardDesc: 'Задачи повышенной сложности',
+    session: 'Твоё занятие',
+    task: 'Задание',
+    of: 'из',
+    check: 'Проверить',
+    hint: '💡 Подсказка',
+    next: 'Следующее задание →',
+    restart: '↻ С начала',
+    readingHead: 'Читаем и понимаем',
+    readingSub: 'Внимательно прочитайте текст',
+    readingTopic: 'Короткий рассказ',
+    readingCheck: 'Проверить ответ',
+    readingNext: 'Следующий текст →',
+    completed: 'Решено задач',
+    correct: 'Правильно',
+    stars: 'Звёзд собрано',
+    speak: 'Озвучить',
+    share: 'Поделиться',
+    emptyErr: 'Пожалуйста, введите ответ перед проверкой!',
+    correctFeedback: 'Супер! Всё верно! ⭐',
+    wrongFeedback: 'Пока не совсем так. Попробуй подумать ещё!',
+    finishedMath: 'Ура! Ты успешно прошёл все задания этого уровня! 🎉',
+    copiedMsg: 'Ссылка на платформу скопирована!',
+    chooseOption: 'Выберите один из вариантов ответа!',
+    readSuccess: 'Отлично! Текст прочитан очень внимательно! ⭐'
+  },
+  kk: {
+    subTitle: 'Өз қарқыныңмен қуанышпен оқы',
+    gradeSelect: 'Сыныпты таңдаңыз',
+    subjectSelect: 'Пәндер',
+    math: 'Математика',
+    reading: 'Оқу',
+    sideNote: 'Асықпай оқы. Қателесу — бұл қалыпты жағдай! Әрқашан көмекке сүйене аласың.',
+    heroTitle: 'Сәлем! Бірге оқиық 🌟',
+    heroDesc: 'Қызықты тапсырмаларды таңда, есептерді шығар және жұлдыздарды жина.',
+    levelHeading: 'Қиындық деңгейі',
+    mathCount: 'Көптеген тапсырмалар бар',
+    easyTitle: '🌱 Бастапқы',
+    easyDesc: 'Қарапайым мысалдар мен сандар',
+    midTitle: '🌿 Орташа',
+    midDesc: 'Теңдеулер мен бірнеше амалдар',
+    hardTitle: '🌳 Жоғары',
+    hardDesc: 'Күрделірек тапсырмалар',
+    session: 'Сенің сабағың',
+    task: 'Тапсырма',
+    of: 'ішінен',
+    check: 'Тексеру',
+    hint: '💡 Көмек',
+    next: 'Келесі тапсырма →',
+    restart: '↻ Қайта бастау',
+    readingHead: 'Оқимыз және түсінеміз',
+    readingSub: 'Мәтінді мұқият оқыңыз',
+    readingTopic: 'Қысқа мәтін',
+    readingCheck: 'Жауапты тексеру',
+    readingNext: 'Келесі мәтін →',
+    completed: 'Орындалды',
+    correct: 'Дұрыс жауаптар',
+    stars: 'Жинаған жұлдыздар',
+    speak: 'Дыбыстау',
+    share: 'Бөлісу',
+    emptyErr: 'Алдымен жауапты енгізіңіз!',
+    correctFeedback: 'Жарайсың! Өте дұрыс! ⭐',
+    wrongFeedback: 'Әлі дұрыс емес. Тағы бір рет ойланып көр!',
+    finishedMath: 'Керемет! Сен бұл деңгейдегі барлық есепті орындадың! 🎉',
+    copiedMsg: 'Платформа сілтемесі көшірілді!',
+    chooseOption: 'Жауап нұсқаларының бірін таңдаңыз!',
+    readSuccess: 'Дұрыс! Мәтінді өте мұқият оқыдың! ⭐'
+  }
+};
+
+// Reading Database
+const readingDatabase = {
+  1: [
+    {
+      text: 'Аянның қызыл добы бар. Ол доппен аулада ойнайды. Кешке допты үйге алып кіреді.',
+      text_ru: 'У Аяна есть красный мяч. Он играет с мячом во дворе. Вечером он заносит мяч домой.',
+      q: 'Аянда не бар?',
+      q_ru: 'Что есть у Аяна?',
+      options: ['Қызыл доп (Красный мяч)', 'Көк кітап (Синяя книга)', 'Жасыл сөмке (Зеленый рюкзак)'],
+      options_ru: ['Красный мяч', 'Синяя книга', 'Зеленый рюкзак'],
+      correct: 0
+    },
+    {
+      text: 'Таңертең күн шықты. Айша терезені ашып, гүлдерге су құйды.',
+      text_ru: 'Утром взошло солнце. Айша открыла окно и полила цветы.',
+      q: 'Айша не істеді?',
+      q_ru: 'Что сделала Айша?',
+      options: ['Гүлдерге су құйды (Полила цветы)', 'Сурет салды (Нарисовала рисунок)', 'Ұйықтады (Легла спать)'],
+      options_ru: ['Полила цветы', 'Нарисовала рисунок', 'Легла спать'],
+      correct: 0
+    }
+  ],
+  2: [
+    {
+      text: 'Марат мектепке ерте келді. Ол кітапханадан қызықты ертегі кітабын алды.',
+      text_ru: 'Марат пришел в школу рано. Он взял в библиотеке интересную книгу сказок.',
+      q: 'Марат қайдан кітап алды?',
+      q_ru: 'Где Марат взял книгу?',
+      options: ['Дүкеннен (Из магазина)', 'Кітапханадан (Из библиотеки)', 'Үйден (Из дома)'],
+      options_ru: ['В магазине', 'В библиотеке', 'Дома'],
+      correct: 1
+    }
+  ],
+  3: [
+    {
+      text: 'Көктемде күн жылынады. Қар еріп, ағаштар бүршік жарады. Құстар жылы жақтан оралады.',
+      text_ru: 'Весной становится тепло. Тает снег, на деревьях набухают почки. Птицы возвращаются из теплых краев.',
+      q: 'Құстар қай мезгілде оралады?',
+      q_ru: 'В какое время года возвращаются птицы?',
+      options: ['Қыста (Зимой)', 'Күзде (Осенью)', 'Көктемде (Весной)'],
+      options_ru: ['Зимой', 'Осенью', 'Весной'],
+      correct: 2
+    }
+  ],
+  4: [
+    {
+      text: 'Суды үнемдеу — табиғатты қорғаудың бір жолы. Тісті тазалағанда кранды жауып қою керек.',
+      text_ru: 'Экономия воды — один из способов защиты природы. Когда чистишь зубы, нужно закрывать кран.',
+      q: 'Суды үнемдеу үшін не істеу керек?',
+      q_ru: 'Что нужно делать для экономии воды?',
+      options: ['Кранды ашық қалдыру', 'Тісті тазалағанда кранды жабу', 'Суды көп төгу'],
+      options_ru: ['Оставлять кран открытым', 'Закрывать кран при чистке зубов', 'Выливать воду'],
+      correct: 1
+    }
+  ]
+};
+
+// Helper Elements Selectors
+const $ = id => document.getElementById(id);
+
+// Math Task Generator
+function generateMathTasks(grade, level) {
+  const tasks = [];
+  for (let i = 0; i < 4; i++) {
+    let a, b, op, ans, hint;
+    if (grade === 1) {
+      a = (i + 1) * 2 + level * 2;
+      b = i + 1 + level;
+      op = i % 2 === 0 ? '+' : '-';
+      if (op === '-' && b > a) [a, b] = [b, a];
+      ans = op === '+' ? a + b : a - b;
+      hint = op === '+' ? `Попробуй прибавить ${b} к ${a}` : `Попробуй отнять ${b} от ${a}`;
+    } else if (grade === 2) {
+      a = 10 + i * 4 + level * 5;
+      b = 3 + i * 2;
+      op = i % 2 === 0 ? '+' : '-';
+      ans = op === '+' ? a + b : a - b;
+      hint = `Сложи сначала десятки, а затем единицы.`;
+    } else if (grade === 3) {
+      a = 2 + i + level;
+      b = 3 + i;
+      op = i % 2 === 0 ? '×' : '+';
+      ans = op === '×' ? a * b : a + b;
+      hint = op === '×' ? `Умножение — это сложение числа ${a} ${b} раз(а).` : `Сложи два числа.`;
+    } else {
+      b = 2 + i + level;
+      ans = 3 + i + level;
+      a = b * ans;
+      op = '÷';
+      hint = `Деление — это действие, обратное умножению.`;
+    }
+    tasks.push({
+      q: `${a} ${op} ${b} = ?`,
+      a: ans,
+      hint: hint
+    });
+  }
+  return tasks;
+}
+
+// UI Refresh & Localization Engine
+function updateLanguageUI() {
+  const lang = $('langSelect').value;
+  const txt = i18n[lang];
+
+  $('subTitleText').textContent = txt.subTitle;
+  $('lblGradeSelect').textContent = txt.gradeSelect;
+  $('lblSubjectSelect').textContent = txt.subjectSelect;
+  $('lblMath').textContent = txt.math;
+  $('lblReading').textContent = txt.reading;
+  $('sideInfoNote').textContent = txt.sideNote;
+  $('heroTitle').textContent = txt.heroTitle;
+  $('heroDesc').textContent = txt.heroDesc;
+  $('lblLevelHeading').textContent = txt.levelHeading;
+  $('lblMathCount').textContent = txt.mathCount;
+  $('lvlEasyTitle').textContent = txt.easyTitle;
+  $('lvlEasyDesc').textContent = txt.easyDesc;
+  $('lvlMidTitle').textContent = txt.midTitle;
+  $('lvlMidDesc').textContent = txt.midDesc;
+  $('lvlHardTitle').textContent = txt.hardTitle;
+  $('lvlHardDesc').textContent = txt.hardDesc;
+  $('lblSession').textContent = txt.session;
+  $('mathCheckBtn').textContent = txt.check;
+  $('mathHintBtn').textContent = txt.hint;
+  $('mathNextBtn').textContent = txt.next;
+  $('mathRestartBtn').textContent = txt.restart;
+  $('lblReadingTitle').textContent = txt.readingHead;
+  $('lblReadingSub').textContent = txt.readingSub;
+  $('lblReadingTopic').textContent = txt.readingTopic;
+  $('readingCheckBtn').textContent = txt.check;
+  $('readingNextBtn').textContent = txt.next;
+  $('lblCompleted').textContent = txt.completed;
+  $('lblCorrect').textContent = txt.correct;
+  $('lblStars').textContent = txt.stars;
+  $('speakBtnText').textContent = txt.speak;
+  $('shareBtnText').textContent = txt.share;
+
+  $('heroGradeBadge').textContent = `${currentGrade} ${lang === 'ru' ? 'класс' : 'сынып'}`;
+
+  if (currentSubject === 'math') {
+    renderMathQuestion();
+  } else {
+    renderReadingQuestion();
+  }
+}
+
+// Math Controller
+function initMathModule() {
+  mathList = generateMathTasks(currentGrade, currentLevel);
+  mathIndex = 0;
+  renderMathQuestion();
+}
+
+function renderMathQuestion() {
+  const lang = $('langSelect').value;
+  const txt = i18n[lang];
+  
+  if (mathIndex >= mathList.length) {
+    $('mathQuestion').textContent = txt.finishedMath;
+    $('mathAnswer').classList.add('hidden');
+    $('mathCheckBtn').classList.add('hidden');
+    $('mathHintBtn').classList.add('hidden');
+    $('mathNextBtn').classList.add('hidden');
+    $('mathProgressCounter').textContent = `4 / 4`;
+    $('mathProgressBar').style.width = '100%';
+    return;
+  }
+
+  const currentTask = mathList[mathIndex];
+  $('mathAnswer').classList.remove('hidden');
+  $('mathCheckBtn').classList.remove('hidden');
+  $('mathHintBtn').classList.remove('hidden');
+  $('mathNextBtn').classList.add('hidden');
+  $('mathAnswer').value = '';
+  $('mathQuestion').textContent = currentTask.q;
+  
+  hideFeedback('mathFeedback');
+  
+  $('mathProgressCounter').textContent = `${txt.task} ${mathIndex + 1} ${txt.of} ${mathList.length}`;
+  $('mathProgressBar').style.width = `${(mathIndex / mathList.length) * 100}%`;
+  
+  const levelNames = [txt.easyTitle, txt.midTitle, txt.hardTitle];
+  $('mathTopicLabel').textContent = `${txt.math} · ${currentGrade} ${lang === 'ru' ? 'класс' : 'сынып'} · ${levelNames[currentLevel]}`;
+}
+
+function checkMathAnswer() {
+  const lang = $('langSelect').value;
+  const txt = i18n[lang];
+  const userAns = $('mathAnswer').value.trim();
+
+  if (!userAns) {
+    showFeedback('mathFeedback', 'warning', txt.emptyErr);
+    return;
+  }
+
+  completedCount++;
+  const task = mathList[mathIndex];
+  
+  if (parseInt(userAns, 10) === task.a) {
+    correctCount++;
+    starsCount++;
+    showFeedback('mathFeedback', 'success', txt.correctFeedback);
+    $('mathNextBtn').classList.remove('hidden');
+  } else {
+    showFeedback('mathFeedback', 'error', txt.wrongFeedback);
+  }
+  updateStats();
+}
+
+// Reading Controller
+function renderReadingQuestion() {
+  const lang = $('langSelect').value;
+  const txt = i18n[lang];
+  const list = readingDatabase[currentGrade] || readingDatabase[1];
+  const item = list[readingIndex % list.length];
+
+  const passage = lang === 'ru' ? (item.text_ru || item.text) : item.text;
+  const question = lang === 'ru' ? (item.q_ru || item.q) : item.q;
+  const options = lang === 'ru' ? (item.options_ru || item.options) : item.options;
+
+  $('readingPassage').textContent = passage;
+  $('readingQuestion').textContent = question;
+
+  const optionsContainer = $('readingOptions');
+  optionsContainer.innerHTML = '';
+
+  options.forEach((optText, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = optText;
+    btn.onclick = () => {
+      document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    };
+    optionsContainer.appendChild(btn);
+  });
+
+  hideFeedback('readingFeedback');
+  $('readingNextBtn').classList.add('hidden');
+  $('readingCheckBtn').classList.remove('hidden');
+}
+
+function checkReadingAnswer() {
+  const lang = $('langSelect').value;
+  const txt = i18n[lang];
+  const selectedOpt = document.querySelector('.option-btn.selected');
+
+  if (!selectedOpt) {
+    showFeedback('readingFeedback', 'warning', txt.chooseOption);
+    return;
+  }
+
+  const list = readingDatabase[currentGrade] || readingDatabase[1];
+  const item = list[readingIndex % list.length];
+  const options = Array.from($('readingOptions').children);
+  const selectedIndex = options.indexOf(selectedOpt);
+
+  completedCount++;
+
+  if (selectedIndex === item.correct) {
+    correctCount++;
+    starsCount++;
+    showFeedback('readingFeedback', 'success', txt.readSuccess);
+    $('readingNextBtn').classList.remove('hidden');
+  } else {
+    showFeedback('readingFeedback', 'error', txt.wrongFeedback);
+  }
+  updateStats();
+}
+
+// Global UI Helpers
+function showFeedback(elementId, type, message) {
+  const el = $(elementId);
+  el.className = `feedback-box ${type}`;
+  el.textContent = message;
+}
+
+function hideFeedback(elementId) {
+  const el = $(elementId);
+  el.className = 'feedback-box';
+  el.textContent = '';
+}
+
+function updateStats() {
+  $('statCompleted').textContent = completedCount;
+  $('statCorrect').textContent = correctCount;
+  $('statStars').textContent = `⭐ ${starsCount}`;
+}
+
+function showToast(msg) {
+  const toast = $('toastMsg');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// Text To Speech (TTS)
+function speakCurrentTask() {
+  if (!('speechSynthesis' in window)) {
+    showToast('Озвучивание не поддерживается браузером');
+    return;
+  }
+  window.speechSynthesis.cancel();
+  
+  let text = '';
+  if (currentSubject === 'math') {
+    text = $('mathQuestion').textContent;
+  } else {
+    text = $('readingPassage').textContent + '. ' + $('readingQuestion').textContent;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = $('langSelect').value === 'kk' ? 'kk-KZ' : 'ru-RU';
+  utterance.rate = parseFloat($('speechSpeed').value);
+  window.speechSynthesis.speak(utterance);
+}
+
+// Event Listeners Initialization
+document.addEventListener('DOMContentLoaded', () => {
+
+  // Grade Buttons
+  document.querySelectorAll('#gradeButtons .nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#gradeButtons .nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentGrade = parseInt(btn.dataset.grade, 10);
+      updateLanguageUI();
+      initMathModule();
+      renderReadingQuestion();
+    });
+  });
+
+  // Subject Switches
+  document.querySelectorAll('.subject-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentSubject = btn.dataset.subject;
+      
+      if (currentSubject === 'math') {
+        $('mathView').classList.remove('hidden');
+        $('readingView').classList.add('hidden');
+        renderMathQuestion();
+      } else {
+        $('mathView').classList.add('hidden');
+        $('readingView').classList.remove('hidden');
+        renderReadingQuestion();
+      }
+    });
+  });
+
+  // Level Selection Cards
+  document.querySelectorAll('.level-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.level-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      currentLevel = parseInt(card.dataset.level, 10);
+      initMathModule();
+    });
+  });
+
+  // Math Actions
+  $('mathCheckBtn').addEventListener('click', checkMathAnswer);
+  $('mathAnswer').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') checkMathAnswer();
+  });
+
+  $('mathHintBtn').addEventListener('click', () => {
+    const task = mathList[mathIndex];
+    if (task) showFeedback('mathFeedback', 'warning', `💡 ${task.hint}`);
+  });
+
+  $('mathNextBtn').addEventListener('click', () => {
+    mathIndex++;
+    renderMathQuestion();
+  });
+
+  $('mathRestartBtn').addEventListener('click', initMathModule);
+
+  // Reading Actions
+  $('readingCheckBtn').addEventListener('click', checkReadingAnswer);
+  $('readingNextBtn').addEventListener('click', () => {
+    readingIndex++;
+    renderReadingQuestion();
+  });
+
+  // Control Buttons
+  $('langSelect').addEventListener('change', updateLanguageUI);
+  
+  $('fontSizeToggle').addEventListener('click', () => {
+    isLargeFont = !isLargeFont;
+    document.body.classList.toggle('large-text', isLargeFont);
+    $('fontSizeToggle').textContent = isLargeFont ? 'A− Размер' : 'A+ Размер';
+  });
+
+  $('speakBtn').addEventListener('click', speakCurrentTask);
+
+  $('shareBtn').addEventListener('click', () => {
+    const shareData = {
+      title: 'CogniKids',
+      text: 'Учись легко вместе с CogniKids!',
+      url: window.location.href
+    };
+
+    if (navigator.share) {
+      navigator.share(shareData).catch(() => {});
+    } else {
+      // Fallback copy using standard execCommand
+      const dummy = document.createElement('input');
+      document.body.appendChild(dummy);
+      dummy.value = window.location.href;
+      dummy.select();
+      document.execCommand('copy');
+      document.body.removeChild(dummy);
+      showToast(i18n[$('langSelect').value].copiedMsg);
+    }
+  });
+
+  // Startup Init
+  initMathModule();
+  updateLanguageUI();
+});
+</script>
+</body>
+</html>
